@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datenschutz — Moritz Steinbach</title>
+<meta name="robots" content="noindex">
+<style>
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url('fonts/inter-latin-ext-wght-normal.woff2') format('woff2-variations');
+    unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url('fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: #04101e;
+    color: rgba(224,216,202,0.96);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 96px 32px 120px;
+  }
+  .kicker {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #f2762c;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+    margin-bottom: 36px;
+    color: rgba(232,226,216,0.96);
+  }
+  .intro {
+    color: rgba(178,170,156,0.85);
+    font-size: 15.5px;
+    line-height: 1.62;
+    margin-bottom: 56px;
+    max-width: 60ch;
+  }
+  h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: rgba(232,226,216,0.96);
+    margin-top: 44px;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  h2:first-of-type { margin-top: 0; }
+  h3 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: rgba(210,205,195,0.9);
+    letter-spacing: 0.02em;
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+  p {
+    color: rgba(210,205,195,0.9);
+    margin-bottom: 12px;
+    max-width: 60ch;
+  }
+  ul {
+    color: rgba(210,205,195,0.9);
+    padding-left: 20px;
+    margin-bottom: 16px;
+    max-width: 60ch;
+  }
+  ul li { margin-bottom: 6px; }
+  a {
+    color: #f2762c;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(242,118,44,0.3);
+    transition: border-color 180ms ease;
+  }
+  a:hover { border-bottom-color: #f2762c; }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(170,165,155,0.74);
+    margin-bottom: 64px;
+    border-bottom: none;
+  }
+  .back:hover { color: rgba(224,216,202,0.96); border-bottom: none; }
+  .back svg { transition: transform 200ms ease; }
+  .back:hover svg { transform: translateX(-3px); }
+  .meta {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 12.5px;
+    color: rgba(150,145,135,0.7);
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 56px 20px 80px; }
+    h1 { margin-bottom: 24px; }
+    .intro { margin-bottom: 36px; }
+    .back { margin-bottom: 40px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="/" class="back">
+      <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+        <path d="M13 5 H2 M6 1 L2 5 L6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Zurück
+    </a>
+
+    <div class="kicker">Rechtliches</div>
+    <h1>Datenschutzerklärung</h1>
+
+    <p class="intro">
+      Diese Seite verarbeitet so wenig personenbezogene Daten wie möglich. Es gibt kein Tracking, keine Analytics-Cookies und keine eingebetteten Werbe-Pixel. Was technisch trotzdem an Daten anfällt, ist hier transparent aufgeführt.
+    </p>
+
+    <h2>1. Verantwortlicher</h2>
+    <p>
+      Moritz Steinbach<br>
+      Ainmillerstraße 30<br>
+      80801 München<br>
+      Deutschland<br>
+      E-Mail: <a href="mailto:hallo@moritz-steinbach.de">hallo@moritz-steinbach.de</a>
+    </p>
+
+    <h2>2. Hosting</h2>
+    <p>
+      Diese Website wird über <strong>Cloudflare Pages</strong> ausgeliefert, einen Dienst der Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA), in der EU vertreten durch die Cloudflare Germany GmbH. Beim Aufruf der Seite verarbeitet Cloudflare technisch notwendige Daten:
+    </p>
+    <ul>
+      <li>IP-Adresse des aufrufenden Geräts</li>
+      <li>Datum und Uhrzeit des Aufrufs</li>
+      <li>Aufgerufene URL</li>
+      <li>Übertragene Datenmenge</li>
+      <li>User-Agent (Browser- und Betriebssystem-Kennung)</li>
+      <li>Referrer-URL (wenn vom Browser übermittelt)</li>
+    </ul>
+    <p>
+      Diese Daten werden zur Auslieferung der Seite, zur Abwehr von Angriffen und zur Sicherstellung der Verfügbarkeit verarbeitet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am sicheren und stabilen Betrieb der Website). Für Datenübermittlungen in die USA stützt sich Cloudflare auf das EU-US Data Privacy Framework sowie Standardvertragsklauseln (Art. 46 DSGVO). Details: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">cloudflare.com/privacypolicy</a>.
+    </p>
+
+    <h2>3. Cookies</h2>
+    <p>
+      Diese Website setzt <strong>keine Cookies</strong> — weder eigene noch von Drittanbietern. Es gibt deshalb auch keinen Cookie-Banner. Beim Klick auf externe Links (siehe unten) gelangen Sie auf andere Websites, die eigene Cookie-Richtlinien haben.
+    </p>
+
+    <h2>4. Schriftarten</h2>
+    <p>
+      Die verwendete Schriftart „Inter" wird direkt vom Webserver dieser Domain ausgeliefert. Es findet keine Verbindung zu Google Fonts, Adobe Fonts oder anderen externen Schriftanbietern statt. Beim Aufruf der Seite werden also keine Daten an Dritte übermittelt, nur um die Schrift zu laden.
+    </p>
+
+    <h2>5. Externe Links</h2>
+    <p>
+      Die Seite enthält Links zu externen Diensten. Diese werden erst aktiviert, wenn Sie aktiv darauf klicken. Erst dann werden Daten an die entsprechenden Anbieter übermittelt.
+    </p>
+
+    <h3>Calendly</h3>
+    <p>
+      Der Button „Termin vereinbaren" führt zu Calendly (Calendly LLC, 271 17th St NW, Atlanta, GA 30363, USA). Calendly verarbeitet die von Ihnen dort eingegebenen Daten zur Terminbuchung. Rechtsgrundlage für die Verarbeitung über Calendly ist Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung). Datenschutzerklärung von Calendly: <a href="https://calendly.com/privacy" target="_blank" rel="noopener noreferrer">calendly.com/privacy</a>.
+    </p>
+
+    <h3>LinkedIn</h3>
+    <p>
+      Der Link „Mehr über mich" führt zu meinem LinkedIn-Profil. Betreiber: LinkedIn Ireland Unlimited Company (Wilton Plaza, Wilton Place, Dublin 2, Irland). Bei einem Klick werden Daten an LinkedIn übermittelt. Datenschutzerklärung: <a href="https://www.linkedin.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">linkedin.com/legal/privacy-policy</a>.
+    </p>
+
+    <h3>E-Mail-Kontakt</h3>
+    <p>
+      Wenn Sie mir eine E-Mail schreiben, verarbeite ich Ihre Angaben (Name, E-Mail-Adresse, Inhalt der Nachricht) zur Bearbeitung Ihrer Anfrage. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b und lit. f DSGVO. Ich speichere E-Mails nur so lange, wie es für die Bearbeitung Ihres Anliegens erforderlich ist.
+    </p>
+
+    <h2>6. Ihre Rechte</h2>
+    <p>
+      Sie haben jederzeit das Recht auf:
+    </p>
+    <ul>
+      <li>Auskunft über die von mir verarbeiteten Daten (Art. 15 DSGVO)</li>
+      <li>Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+      <li>Löschung Ihrer Daten (Art. 17 DSGVO)</li>
+      <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+      <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+      <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
+    </ul>
+    <p>
+      Für diese Anliegen genügt eine formlose Nachricht per E-Mail.
+    </p>
+
+    <h2>7. Beschwerderecht</h2>
+    <p>
+      Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO). Zuständig für mich ist:
+    </p>
+    <p>
+      Bayerisches Landesamt für Datenschutzaufsicht (BayLDA)<br>
+      Promenade 18, 91522 Ansbach<br>
+      <a href="https://www.lda.bayern.de" target="_blank" rel="noopener noreferrer">lda.bayern.de</a>
+    </p>
+
+    <div class="meta">
+      Stand: Mai 2026
+    </div>
+  </div>
+</body>
+</html>
