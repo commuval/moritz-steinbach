@@ -337,11 +337,10 @@ const SITE_TITLE_DEFAULT = 'Moritz Steinbach \u2014 K\xF6nnen \xb7 D\xFCrfen \xb
 function getFirmaFromUrl() {
   try {
     const q = new URLSearchParams(window.location.search);
+    // URLSearchParams.get() decodes %xx and + automatically
     const raw = (q.get('firma') || q.get('f') || q.get('unternehmen') || '').trim();
     if (!raw) return '';
-    let s = decodeURIComponent(raw.replace(/\+/g, ' ')).trim();
-    s = s.replace(/[\u0000-\u001F<>\"]/g, '');
-    return s.slice(0, 120);
+    return raw.replace(/[\u0000-\u001F<>"]/g, '').slice(0, 120);
   } catch {
     return '';
   }
