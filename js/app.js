@@ -1684,7 +1684,7 @@ function Section3({
       gap: isMobile ? 12 : 16
     }
   }, /*#__PURE__*/React.createElement("img", {
-    src: "images/moritz.png",
+    src: "/images/moritz.png",
     alt: "Moritz Steinbach",
     width: isMobile ? 46 : 54,
     height: isMobile ? 46 : 54,
@@ -2554,9 +2554,10 @@ function App() {
     }
   }, "Was h\xE4lt ", /*#__PURE__*/React.createElement("span", {
     style: {
-      color: theme.accentHx
+      color: theme.accentHx,
+      fontWeight: 600
     }
-  }, "Sie"), " noch zur\xFCck?"), /*#__PURE__*/React.createElement("div", {
+  }, firma || "Sie"), " noch zur\xFCck?"), /*#__PURE__*/React.createElement("div", {
     ref: satzWrapRef
   }, (() => {
     const s = getSatzParts(bary, theme.accentHx);
