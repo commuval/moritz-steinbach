@@ -1653,7 +1653,7 @@ function Section3({
       gap: isMobile ? 16 : 26
     }
   }, /*#__PURE__*/React.createElement("a", {
-    href: "https://calendly.com",
+    href: "https://calendly.com/hallo-moritz-steinbach/30min",
     target: "_blank",
     rel: "noopener noreferrer",
     onMouseEnter: () => setHovBtn(true),
@@ -1701,12 +1701,15 @@ function Section3({
       gap: '8px 22px'
     }
   }, /*#__PURE__*/React.createElement("a", {
-    href: "https://linkedin.com",
+    href: "https://de.linkedin.com/in/moritz-steinbach/de",
     target: "_blank",
     rel: "noopener noreferrer",
     onMouseEnter: () => setHovLi(true),
     onMouseLeave: () => setHovLi(false),
     style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 7,
       fontFamily: "'Inter',sans-serif",
       fontSize: 13.5,
       fontWeight: 500,
@@ -1716,7 +1719,20 @@ function Section3({
       paddingBottom: 1,
       transition: 'color 160ms ease, border-color 160ms ease'
     }
-  }, "Mehr \xFCber mich"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "16",
+    height: "16",
+    viewBox: "0 0 24 24",
+    fill: "currentColor",
+    "aria-hidden": "true",
+    style: {
+      flexShrink: 0,
+      display: 'block',
+      opacity: 0.92
+    }
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+  })), "Mehr \xFCber mich"), /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true",
     style: {
       width: 3,
@@ -1785,6 +1801,7 @@ function App() {
   const scrollHintRef = useRef(null);
   const scrollHintS2Ref = useRef(null);
   const scrollHintCanShowRef = useRef(false);
+  const wheelLockUntilRef = useRef(0);
   const themeRef = useRef(OCEAN_THEME);
   // Page-flip state
   const pageRef = useRef(0);
@@ -2030,13 +2047,21 @@ function App() {
   useEffect(() => {
     const onWheel = e => {
       e.preventDefault();
-      flipPage(e.deltaY > 0 ? 1 : -1);
+      if (isFlippingRef.current) return;
+      const now = performance.now();
+      if (now < wheelLockUntilRef.current) return;
+      const dy = e.deltaY;
+      if (!Number.isFinite(dy) || Math.abs(dy) < 14) return;
+      const dir = dy > 0 ? 1 : -1;
+      // Harte Cooldown-Sperre verhindert Doppel-Flips durch Trackpad-Inertia.
+      wheelLockUntilRef.current = now + (isMobile ? 520 : 460);
+      flipPage(dir);
     };
     window.addEventListener('wheel', onWheel, {
       passive: false
     });
     return () => window.removeEventListener('wheel', onWheel);
-  }, [flipPage]);
+  }, [flipPage, isMobile]);
 
   // ─── DOCUMENT-TOUCH → Page-Flip (Section 2 & 3, nicht Hero) ─────────────────
   useEffect(() => {
@@ -2195,23 +2220,42 @@ function App() {
           x: v.x + hubOffset.x,
           y: v.y + hubOffset.y
         },
-        nodes: [{
-          text: cat.main,
-          pos: slots[1],
-          isMain: true
-        }, {
-          text: cat.subs[0],
-          pos: slots[0],
-          isMain: false
-        }, {
-          text: cat.subs[1],
-          pos: slots[2],
-          isMain: false
-        }, {
-          text: cat.subs[2],
-          pos: slots[3],
-          isMain: false
-        }]
+        nodes: (() => {
+          const n = [{
+            text: cat.main,
+            pos: {
+              ...slots[1]
+            },
+            isMain: true
+          }, {
+            text: cat.subs[0],
+            pos: {
+              ...slots[0]
+            },
+            isMain: false
+          }, {
+            text: cat.subs[1],
+            pos: {
+              ...slots[2]
+            },
+            isMain: false
+          }, {
+            text: cat.subs[2],
+            pos: {
+              ...slots[3]
+            },
+            isMain: false
+          }];
+          // Können (ci=0): „Lückenhafte Datenqualität“ etwas tiefer, weniger Überlapp mit dem Hauptpunkt
+          if (ci === 0) {
+            const dy = isMobile ? 16 : 22;
+            n[2].pos = {
+              ...n[2].pos,
+              y: n[2].pos.y + dy
+            };
+          }
+          return n;
+        })()
       };
     });
   }, [verts, isMobile, size.w, size.h]);
@@ -2605,29 +2649,6 @@ function App() {
       zIndex: 15
     }
   })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'fixed',
-      bottom: 22,
-      left: '50%',
-      transform: 'translateX(-50%)',
-      display: 'flex',
-      gap: isMobile ? 14 : 10,
-      zIndex: 200,
-      pointerEvents: 'auto'
-    }
-  }, [0, 1, 2].map(p => /*#__PURE__*/React.createElement("div", {
-    key: p,
-    onClick: () => gotoPage(p),
-    style: {
-      width: isMobile ? 11 : 7,
-      height: isMobile ? 11 : 7,
-      borderRadius: '50%',
-      cursor: 'pointer',
-      background: currentPage === p ? theme.accentHx : `rgba(${theme.accent[0]},${theme.accent[1]},${theme.accent[2]},0.28)`,
-      transition: 'background 300ms ease, transform 280ms ease',
-      transform: currentPage === p ? 'scale(1.45)' : 'scale(1)'
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
     ref: section2OuterRef,
     style: {
       position: 'fixed',
@@ -2709,6 +2730,33 @@ function App() {
     sectionRef: section3Ref,
     isMobile: isMobile,
     isSmallH: isSmallH
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      bottom: 22,
+      left: '50%',
+      transform: 'translateX(-50%)',
+      display: 'flex',
+      gap: isMobile ? 14 : 10,
+      zIndex: 500,
+      pointerEvents: 'auto'
+    }
+  }, [0, 1, 2].map(p => /*#__PURE__*/React.createElement("button", {
+    key: p,
+    onClick: () => gotoPage(p),
+    "aria-label": `Zu Abschnitt ${p + 1}`,
+    style: {
+      width: isMobile ? 12 : 10,
+      height: isMobile ? 12 : 10,
+      borderRadius: '50%',
+      cursor: 'pointer',
+      border: `1px solid rgba(${theme.accent[0]},${theme.accent[1]},${theme.accent[2]},0.55)`,
+      background: currentPage === p ? theme.accentHx : `rgba(${theme.accent[0]},${theme.accent[1]},${theme.accent[2]},0.38)`,
+      boxShadow: currentPage === p ? `0 0 0 1px rgba(${theme.accent[0]},${theme.accent[1]},${theme.accent[2]},0.48), 0 4px 14px rgba(0,0,0,0.25)` : '0 2px 10px rgba(0,0,0,0.18)',
+      transition: 'background 300ms ease, transform 280ms ease',
+      transform: currentPage === p ? 'scale(1.45)' : 'scale(1)'
+    }
   }))));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(App, null));
+
