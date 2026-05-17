@@ -1492,7 +1492,7 @@ function Section3({
     text: '40 Minuten'
   }, {
     kind: 'eye',
-    text: firma ? `Au\xdfenansicht auf laufende KI-Initiativen bei ${firma}` : 'Au\xdfenansicht auf laufende KI-Initiativen'
+    text: 'Au\xdfenansicht auf laufende KI-Initiativen'
   }, {
     kind: 'reticle',
     text: 'Kritischer Blick auf Annahmen hinter der bisherigen Strategie'
@@ -1503,7 +1503,7 @@ function Section3({
         color: fg.cardMeta
       }
     }, "mit oder ohne mich"))
-  }], [firma, fg.cardMeta]);
+  }], [fg.cardMeta]);
   return /*#__PURE__*/React.createElement("section", {
     ref: sectionRef,
     style: {
