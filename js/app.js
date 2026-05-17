@@ -331,6 +331,21 @@ const THEMES = [
 const DEFAULT_THEME_ID = 'ocean';
 const getTheme = id => THEMES.find(t => t.id === id) || THEMES.find(t => t.id === DEFAULT_THEME_ID) || THEMES[0];
 const OCEAN_THEME = getTheme(DEFAULT_THEME_ID);
+const SITE_TITLE_DEFAULT = 'Moritz Steinbach \u2014 K\xF6nnen \xb7 D\xFCrfen \xb7 Wollen';
+
+// Persönliche Links: ?firma=… oder ?f=… oder ?unternehmen=… (URL-encodiert, max. 120 Zeichen)
+function getFirmaFromUrl() {
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const raw = (q.get('firma') || q.get('f') || q.get('unternehmen') || '').trim();
+    if (!raw) return '';
+    let s = decodeURIComponent(raw.replace(/\+/g, ' ')).trim();
+    s = s.replace(/[\u0000-\u001F<>\"]/g, '');
+    return s.slice(0, 120);
+  } catch {
+    return '';
+  }
+}
 
 // ─── CONSTANTS ────────────────────────────────────────────────────────────────
 const N_TESS = 10;
@@ -1259,7 +1274,8 @@ function Section2({
   headlineRef,
   contentRef,
   theme,
-  isMobile
+  isMobile,
+  firma = ''
 }) {
   const h2Font = "'Inter',sans-serif";
   const {
@@ -1268,10 +1284,7 @@ function Section2({
   const h2Base = fg.h2;
   const dot = w => /*#__PURE__*/React.createElement("span", {
     style: {
-      textDecorationLine: 'underline',
-      textDecorationStyle: 'dotted',
-      textUnderlineOffset: '0.14em',
-      textDecorationThickness: 'from-font'
+      color: theme.accentHx
     }
   }, w);
   const headParts = [{
@@ -1358,7 +1371,12 @@ function Section2({
     accent: theme.accent,
     fg: fg,
     isMobile: isMobile,
-    headline: /*#__PURE__*/React.createElement(React.Fragment, null, "\u201EWir wissen, welche KI-Investitionen f\xFCr unser Unternehmen sinnvoll w\xE4ren \u2014 ", dot('und welche nicht'), ".\"")
+    headline: firma ? /*#__PURE__*/React.createElement(React.Fragment, null, "\u201EWir wissen, welche KI-Investitionen f\xFCr ", /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: theme.accentHx,
+        fontWeight: 600
+      }
+    }, firma), " sinnvoll sind \u2014 ", dot('und welche nicht'), ".\"") : /*#__PURE__*/React.createElement(React.Fragment, null, "\u201EWir wissen, welche KI-Investitionen f\xFCr unser Unternehmen sinnvoll sind \u2014 ", dot('und welche nicht'), ".\"")
   }), /*#__PURE__*/React.createElement(SentenceCard, {
     num: "02",
     viz: /*#__PURE__*/React.createElement(VizDonut, {
@@ -1368,7 +1386,7 @@ function Section2({
     accent: theme.accent,
     fg: fg,
     isMobile: isMobile,
-    headline: /*#__PURE__*/React.createElement(React.Fragment, null, "\u201EWir wissen, woran wir Erfolg messen w\xFCrden \u2014 ", dot('bevor investiert wird'), ", nicht erst danach.\"")
+    headline: /*#__PURE__*/React.createElement(React.Fragment, null, "\u201EWir wissen, woran wir Erfolg messen \u2014 ", dot('bevor investiert wird'), ", nicht erst danach.\"")
   }), /*#__PURE__*/React.createElement(SentenceCard, {
     num: "03",
     viz: /*#__PURE__*/React.createElement(VizSkills, {
@@ -1380,7 +1398,7 @@ function Section2({
     accent: theme.accent,
     fg: fg,
     isMobile: isMobile,
-    headline: /*#__PURE__*/React.createElement(React.Fragment, null, "\u201EWir wissen, womit wir konkret anfangen w\xFCrden \u2014 und ", dot('warum gerade damit'), ".\"")
+    headline: /*#__PURE__*/React.createElement(React.Fragment, null, "\u201EWir wissen, womit wir konkret anfangen \u2014 und ", dot('warum gerade damit'), ".\"")
   }))));
 }
 
@@ -1458,7 +1476,8 @@ function Section3({
   theme,
   sectionRef,
   isMobile,
-  isSmallH
+  isSmallH,
+  firma = ''
 }) {
   const {
     fg,
@@ -1469,12 +1488,12 @@ function Section3({
   const [hovBtn, setHovBtn] = useState(false);
   const [hovLi, setHovLi] = useState(false);
   const [hovMail, setHovMail] = useState(false);
-  const items = [{
+  const items = useMemo(() => [{
     kind: 'clock',
     text: '40 Minuten'
   }, {
     kind: 'eye',
-    text: 'Außenansicht auf laufende KI-Initiativen'
+    text: firma ? `Au\xdfenansicht auf laufende KI-Initiativen bei ${firma}` : 'Au\xdfenansicht auf laufende KI-Initiativen'
   }, {
     kind: 'reticle',
     text: 'Kritischer Blick auf Annahmen hinter der bisherigen Strategie'
@@ -1485,7 +1504,7 @@ function Section3({
         color: fg.cardMeta
       }
     }, "mit oder ohne mich"))
-  }];
+  }], [firma, fg.cardMeta]);
   return /*#__PURE__*/React.createElement("section", {
     ref: sectionRef,
     style: {
@@ -1593,7 +1612,12 @@ function Section3({
       margin: '0 0 0',
       maxWidth: 460
     }
-  }, "Kein Pitch, sondern ein ehrlicher Blick auf ", /*#__PURE__*/React.createElement("span", {
+  }, "Kein Pitch, sondern ein ehrlicher Blick auf ", firma ? /*#__PURE__*/React.createElement(React.Fragment, null, "die KI-Initiativen bei ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: accentHx,
+      fontWeight: 600
+    }
+  }, firma), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
     style: {
       color: accentHx
     }
@@ -1652,12 +1676,32 @@ function Section3({
       alignItems: 'flex-start',
       gap: isMobile ? 16 : 26
     }
-  }, /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("div", {
+    onMouseEnter: () => setHovBtn(true),
+    onMouseLeave: () => setHovBtn(false),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: isMobile ? 12 : 16
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "images/moritz.png",
+    alt: "Moritz Steinbach",
+    width: isMobile ? 46 : 54,
+    height: isMobile ? 46 : 54,
+    style: {
+      width: isMobile ? 46 : 54,
+      height: isMobile ? 46 : 54,
+      borderRadius: '50%',
+      objectFit: 'cover',
+      flexShrink: 0,
+      border: `2px solid rgba(${ar},${ag},${ab},0.4)`,
+      boxShadow: '0 2px 14px rgba(0,0,0,0.12)'
+    }
+  }), /*#__PURE__*/React.createElement("a", {
     href: "https://calendly.com/hallo-moritz-steinbach/30min",
     target: "_blank",
     rel: "noopener noreferrer",
-    onMouseEnter: () => setHovBtn(true),
-    onMouseLeave: () => setHovBtn(false),
     style: {
       display: 'inline-flex',
       alignItems: 'center',
@@ -1693,7 +1737,7 @@ function Section3({
     strokeWidth: "1.8",
     strokeLinecap: "round",
     strokeLinejoin: "round"
-  })))), /*#__PURE__*/React.createElement("div", {
+  }))))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexWrap: 'wrap',
@@ -1743,7 +1787,7 @@ function Section3({
       display: 'inline-block'
     }
   }), /*#__PURE__*/React.createElement("a", {
-    href: "mailto:hallo@example.com",
+    href: "mailto:hallo@moritz-steinbach.de",
     onMouseEnter: () => setHovMail(true),
     onMouseLeave: () => setHovMail(false),
     style: {
@@ -1756,7 +1800,7 @@ function Section3({
       paddingBottom: 1,
       transition: 'color 160ms ease, border-color 160ms ease'
     }
-  }, "Oder schreiben Sie mir direkt")))));
+  }, "Oder schreiben Sie mir direkt"))))));
 }
 
 // ─── APP ─────────────────────────────────────────────────────────────────────
@@ -1822,6 +1866,7 @@ function App() {
   })();
   const isMobile = forceMobile || size.w < 640;
   const isSmallH = size.h < 720; // z.B. iPhone SE (667px) oder kleine Androids
+  const firma = useMemo(() => getFirmaFromUrl(), []);
 
   // ─── PAGE-FLIP CONTROLLER ────────────────────────────────────────────────────
   // Drei fixed-Sections; currentPage steuert Sichtbarkeit per opacity/pointer-events.
@@ -1850,6 +1895,9 @@ function App() {
     const [r, g, b] = theme.accent;
     document.documentElement.style.setProperty('--sel', `rgba(${r},${g},${b},0.25)`);
   }, [theme]);
+  useEffect(() => {
+    document.title = firma ? `${firma} \xb7 Moritz Steinbach` : SITE_TITLE_DEFAULT;
+  }, [firma]);
 
   // Compute triangle vertices from viewport size
   const mkVerts = (w, h) => {
@@ -2668,7 +2716,8 @@ function App() {
     headlineRef: section2HeadlineRef,
     contentRef: section2ContentRef,
     theme: theme,
-    isMobile: isMobile
+    isMobile: isMobile,
+    firma: firma
   }), /*#__PURE__*/React.createElement("div", {
     ref: scrollHintS2Ref,
     style: {
@@ -2729,7 +2778,8 @@ function App() {
     theme: theme,
     sectionRef: section3Ref,
     isMobile: isMobile,
-    isSmallH: isSmallH
+    isSmallH: isSmallH,
+    firma: firma
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'fixed',

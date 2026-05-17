@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Link-Generator — Moritz Steinbach</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, sans-serif;
+    background: #0d0e10;
+    color: #e0d8ca;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: #16181e;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 560px;
+  }
+  h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    color: #e8e4d8;
+  }
+  .sub {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 32px;
+  }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #aaa8a0;
+    margin-bottom: 8px;
+  }
+  input {
+    width: 100%;
+    background: #0d0e10;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 15px;
+    color: #e0d8ca;
+    outline: none;
+    transition: border-color 160ms;
+    margin-bottom: 20px;
+  }
+  input:focus { border-color: rgba(92,168,130,0.6); }
+  .result-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .result-label label { margin: 0; }
+  .result-box {
+    background: #0a0b0d;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #aaa8a0;
+    word-break: break-all;
+    min-height: 48px;
+    margin-bottom: 16px;
+    cursor: text;
+    transition: border-color 160ms;
+  }
+  .result-box.has-value { color: #e0d8ca; border-color: rgba(92,168,130,0.25); }
+  .result-box .firma-highlight { color: #5ca882; font-weight: 600; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  button {
+    flex: 1;
+    min-width: 140px;
+    padding: 13px 20px;
+    border-radius: 8px;
+    border: none;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 160ms, transform 120ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  button:active { transform: translateY(1px); }
+  .btn-copy {
+    background: rgba(92,168,130,0.9);
+    color: #0d0e10;
+  }
+  .btn-copy:hover { background: rgba(92,168,130,1); }
+  .btn-open {
+    background: rgba(255,255,255,0.07);
+    color: #e0d8ca;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .btn-open:hover { background: rgba(255,255,255,0.11); }
+  button:disabled { opacity: 0.35; cursor: default; }
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    background: #2a3a2e;
+    color: #a8d8b8;
+    border: 1px solid rgba(92,168,130,0.3);
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 220ms;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.05);
+    margin: 28px 0;
+  }
+  .history-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 12px;
+  }
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+  .history-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: background 140ms;
+  }
+  .history-item:hover { background: rgba(255,255,255,0.06); }
+  .history-item .name { flex: 1; font-size: 13.5px; color: #c8c2b8; }
+  .history-item .copy-sm {
+    font-size: 11px;
+    color: #5ca882;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+  .empty-history { font-size: 12.5px; color: #555; padding: 4px 0; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Link-Generator</h1>
+  <p class="sub">Personalisierten Outreach-Link für ein Unternehmen erstellen</p>
+
+  <label for="input-firma">Unternehmensname</label>
+  <input id="input-firma" type="text" placeholder="z. B. Marder Maschinenbau" autocomplete="off" />
+
+  <div class="result-label">
+    <label>Dein Link</label>
+  </div>
+  <div class="result-box" id="result-box">— gibt Unternehmensname ein —</div>
+
+  <div class="btn-row">
+    <button class="btn-copy" id="btn-copy" disabled>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Link kopieren
+    </button>
+    <button class="btn-open" id="btn-open" disabled>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Vorschau
+    </button>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="history-title">Zuletzt generiert</div>
+  <div class="history-list" id="history-list">
+    <div class="empty-history">Noch keine Links generiert.</div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Link kopiert</div>
+
+<script>
+  const BASE = 'https://moritz-steinbach.de/';
+  const input = document.getElementById('input-firma');
+  const box   = document.getElementById('result-box');
+  const btnCopy = document.getElementById('btn-copy');
+  const btnOpen = document.getElementById('btn-open');
+  const toast = document.getElementById('toast');
+  const historyList = document.getElementById('history-list');
+  let currentUrl = '';
+  let history = JSON.parse(localStorage.getItem('ms-link-history') || '[]');
+
+  function makeUrl(name) {
+    return BASE + '?firma=' + encodeURIComponent(name);
+  }
+
+  function renderHistory() {
+    if (!history.length) {
+      historyList.innerHTML = '<div class="empty-history">Noch keine Links generiert.</div>';
+      return;
+    }
+    historyList.innerHTML = history.map((name, i) =>
+      `<div class="history-item" data-name="${name.replace(/"/g,'&quot;')}">
+        <span class="name">${escHtml(name)}</span>
+        <span class="copy-sm">kopieren</span>
+      </div>`
+    ).join('');
+    historyList.querySelectorAll('.history-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const name = el.dataset.name;
+        input.value = name;
+        update(name);
+        copyToClipboard(makeUrl(name));
+      });
+    });
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function update(name) {
+    name = name.trim();
+    if (!name) {
+      box.textContent = '— gibt Unternehmensname ein —';
+      box.classList.remove('has-value');
+      btnCopy.disabled = true;
+      btnOpen.disabled = true;
+      currentUrl = '';
+      return;
+    }
+    currentUrl = makeUrl(name);
+    box.innerHTML = BASE + '?firma=<span class="firma-highlight">' + escHtml(encodeURIComponent(name)) + '</span>';
+    box.classList.add('has-value');
+    btnCopy.disabled = false;
+    btnOpen.disabled = false;
+  }
+
+  input.addEventListener('input', () => update(input.value));
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && currentUrl) {
+      saveToHistory(input.value.trim());
+      copyToClipboard(currentUrl);
+    }
+  });
+
+  function saveToHistory(name) {
+    history = [name, ...history.filter(n => n !== name)].slice(0, 12);
+    localStorage.setItem('ms-link-history', JSON.stringify(history));
+    renderHistory();
+  }
+
+  function copyToClipboard(url) {
+    navigator.clipboard.writeText(url).then(() => {
+      showToast('Link kopiert \u2713');
+    }).catch(() => {
+      showToast('Bitte manuell kopieren');
+    });
+  }
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  btnCopy.addEventListener('click', () => {
+    if (!currentUrl) return;
+    saveToHistory(input.value.trim());
+    copyToClipboard(currentUrl);
+  });
+
+  btnOpen.addEventListener('click', () => {
+    if (!currentUrl) return;
+    saveToHistory(input.value.trim());
+    window.open(currentUrl, '_blank');
+  });
+
+  renderHistory();
+  input.focus();
+</script>
+</body>
+</html>
