@@ -157,14 +157,14 @@ const THEMES = [
   label: 'Bernstein',
   light: false,
   fg: FG_DARK,
-  vizMuted: 'rgba(140,140,150,0.55)',
-  bg: '#0d0e10',
-  accent: [212, 165, 116],
-  accentHx: '#d4a574',
-  baseLine: [82, 90, 112],
-  bgFade: [13, 14, 16],
-  particles: [185, 190, 215],
-  hubHi: [232, 195, 150]
+  vizMuted: 'rgba(145,128,88,0.50)',
+  bg: 'radial-gradient(ellipse at 50% 46%, #14110d 0%, #0f0d0a 55%, #0c0b09 100%)',
+  accent: [200, 148, 42],
+  accentHx: '#c8942a',
+  baseLine: [90, 80, 58],
+  bgFade: [12, 11, 9],
+  particles: [175, 158, 108],
+  hubHi: [235, 202, 118]
 }, {
   id: 'ocean',
   label: 'Ozean',
@@ -328,7 +328,7 @@ const THEMES = [
   particles: [128, 168, 132],
   hubHi: [185, 230, 200]
 }];
-const DEFAULT_THEME_ID = 'ocean';
+const DEFAULT_THEME_ID = 'amber';
 const getTheme = id => THEMES.find(t => t.id === id) || THEMES.find(t => t.id === DEFAULT_THEME_ID) || THEMES[0];
 const OCEAN_THEME = getTheme(DEFAULT_THEME_ID);
 const SITE_TITLE_DEFAULT = 'Moritz Steinbach \u2014 K\xF6nnen \xb7 D\xFCrfen \xb7 Wollen';
@@ -1531,15 +1531,6 @@ function Section3({
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      fontFamily: "'Inter',sans-serif",
-      fontSize: 11,
-      fontWeight: 600,
-      letterSpacing: '0.14em',
-      color: accentHx,
-      marginBottom: isMobile ? 8 : 28
-    }
-  }, "04 \u2014 Gespr\xE4ch"), /*#__PURE__*/React.createElement("div", {
-    style: {
       marginBottom: isMobile ? 6 : 18,
       width: isMobile ? 42 : 54,
       height: isMobile ? 42 : 54
@@ -2552,12 +2543,17 @@ function App() {
       marginLeft: 'auto',
       marginRight: 'auto'
     }
-  }, "Was h\xE4lt ", /*#__PURE__*/React.createElement("span", {
+  }, "Was h\xE4lt ", firma ? /*#__PURE__*/React.createElement("span", {
     style: {
       color: theme.accentHx,
       fontWeight: 600
     }
-  }, firma || "Sie"), " noch zur\xFCck?"), /*#__PURE__*/React.createElement("div", {
+  }, firma) : "Sie", " noch ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: theme.accentHx,
+      fontWeight: 600
+    }
+  }, "zur\xFCck"), "?"), /*#__PURE__*/React.createElement("div", {
     ref: satzWrapRef
   }, (() => {
     const s = getSatzParts(bary, theme.accentHx);
