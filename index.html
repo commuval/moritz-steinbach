@@ -1,92 +1,476 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moritz Steinbach — Können · Dürfen · Wollen</title>
-<meta name="description" content="Ein ehrlicher Blick auf Ihre KI-Initiativen. 40 Minuten, kein Pitch.">
-<style>
-  @font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 100 900;
-    src: url('fonts/inter-latin-ext-wght-normal.woff2') format('woff2-variations');
-    unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
-  }
-  @font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 100 900;
-    src: url('fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
-    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #0c0b09; transition: background-color 280ms ease; overflow: hidden; height: 100%; }
-  html { height: 100%; }
-  body::-webkit-scrollbar { display: none; }
-  body { scrollbar-width: none; }
-  #root { width: 100%; overflow-x: hidden; }
-  ::selection { background: var(--sel, rgba(212,165,116,0.25)); }
-  @keyframes satz-word-reveal {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes scroll-hint-bob {
-    0%, 100% { transform: translateY(0); opacity: 1; }
-    50%       { transform: translateY(5px); opacity: 0.6; }
-  }
-  @keyframes bubble-pop {
-    0%   { transform: scale(0.55) translateY(8px); opacity: 0; }
-    70%  { transform: scale(1.06) translateY(-2px); opacity: 1; }
-    100% { transform: scale(1)    translateY(0);    opacity: 1; }
-  }
-  @keyframes s3-fade-up {
-    from { opacity: 0; transform: translateY(28px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  /* Dezenter Legal-Footer — fixed, sichtbar auf allen Pages, unaufdringlich */
-  #legal-footer {
-    position: fixed;
-    bottom: 14px;
-    right: 18px;
-    z-index: 250;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: rgba(180,175,162,0.62);
-    pointer-events: auto;
-    user-select: none;
-  }
-  #legal-footer a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 200ms ease;
-    padding: 4px 2px;
-  }
-  #legal-footer a:hover { color: rgba(220,215,200,0.95); }
-  #legal-footer span { opacity: 0.5; }
-  @media (max-width: 640px) {
-    #legal-footer { bottom: 8px; right: 10px; font-size: 9.5px; }
-  }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KI-Beratung für den Mittelstand | Moritz Steinbach</title>
+<meta name="description" content="KI-Beratung für mittelständische Unternehmen: Analyse, woran die KI-Einführung hängt, KI-Auftakt in zwei Tagen, Ersteinschätzung kostenlos. Moritz Steinbach, München.">
+<link rel="canonical" href="https://moritz-steinbach.de/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://moritz-steinbach.de/">
+<meta property="og:title" content="KI-Beratung für den Mittelstand | Moritz Steinbach">
+<meta property="og:description" content="Analyse, woran die KI-Einführung im Unternehmen hängt. Ersteinschätzung, 30 Minuten, kostenlos.">
+<meta property="og:image" content="https://moritz-steinbach.de/images/moritz.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16302a">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/ibm-plex-serif-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/site.css?v=6">
+<script>if("IntersectionObserver"in window&&!matchMedia("(prefers-reduced-motion:reduce)").matches){document.documentElement.classList.add("js-reveal");setTimeout(function(){if(!window.__rv)document.documentElement.classList.remove("js-reveal")},2500)}</script>
 </head>
 <body>
-<div id="root"></div>
+<a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+<nav class="nav" aria-label="Hauptnavigation">
+    <div class="wrap nav-in">
+      <a class="nav-name" href="#oben">Moritz Steinbach</a>
+      <div class="nav-links">
+        <a href="#ablauf">Ablauf</a>
+        <a href="#ueber">Wer ich bin</a>
+        <a href="#faq">Fragen</a>
+        <a class="nav-cta" href="https://calendly.com/hallo-moritz-steinbach/30min" data-cal>Ersteinschätzung</a>
+      </div>
+    </div>
+  </nav>
+  <header class="dark" id="oben">
+    <div class="wrap hero-in">
+      <div class="hero-text">
+        <p class="eyebrow">Moritz Steinbach · München</p>
+        <h1>KI-Beratung für den Mittelstand</h1>
+        <p class="lead">Sie wollen KI einsetzen und wissen nicht, womit Sie anfangen sollen. Oder Sie haben angefangen, und es kommt nicht voran. Ich bewerte, was bei Ihnen schon läuft, finde die Anwendungsfälle, die sich rechnen, und setze sie mit Ihnen um.</p>
+        <div class="cta-row">
+          <a class="btn" href="https://calendly.com/hallo-moritz-steinbach/30min" data-cal>Ersteinschätzung buchen</a>
+          <span class="cta-note">30 Minuten, kostenlos, ohne Verkaufsgespräch</span>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <img class="hero-avatar" src="images/moritz.webp" width="480" height="600" alt="Porträt von Moritz Steinbach">
+        <p class="hc-name">Moritz Steinbach</p>
+        <p class="hc-role">KI-Berater, München</p>
+        <p class="hc-row">Leiter der <b>KI-Transformation</b> bei HR&nbsp;factory</p>
+        <p class="hc-row">Mitgründer des <b>KI-Recruiting-Tools</b> Talentigo</p>
+        <p class="hc-row">KI-Konzepte u.&nbsp;a. für die <b>Süddeutsche Zeitung</b> und <b>Lufthansa CityLine</b></p>
+      </aside>
+    </div>
+  </header>
 
-<footer id="legal-footer" aria-label="Rechtliches">
-  <a href="/impressum.html">Impressum</a>
-  <span aria-hidden="true">·</span>
-  <a href="/datenschutz.html">Datenschutz</a>
-</footer>
+  <section class="proof" aria-label="Software-Kunden">
+    <div class="wrap proof-wrap">
+      <div class="logo-band">
+        <p class="proof-label">Software-Kunden<br><span>Auszug der Unternehmen, die meine Recruiting-Software Talentigo nutzen</span></p>
+        <div class="logo-row">
+          <img src="images/logos/logo-gleisslutz.webp" width="124" height="22" loading="lazy" decoding="async" alt="Gleiss Lutz">
+          <img class="logo-mark" src="images/logos/logo-saphir.webp" width="34" height="34" loading="lazy" decoding="async" alt="SAPHIR">
+          <img src="images/logos/myflexbox.webp" width="138" height="33" loading="lazy" decoding="async" alt="MyFlexbox">
+          <img src="images/logos/logo-hr-factory.webp" width="170" height="28" loading="lazy" decoding="async" alt="HR factory">
+          <img src="images/logos/logo-audivio.webp" width="116" height="26" loading="lazy" decoding="async" alt="Audivio">
+        </div>
+      </div>
+    </div>
+  </section>
 
-<script src="js/react.production.min.js"></script>
-<script src="js/react-dom.production.min.js"></script>
-<script src="js/app.js?v=4"></script>
+  <main id="inhalt">
+
+  <!-- ═══ 01 AUSGANGSLAGE ═══ -->
+  <section aria-labelledby="h-lage">
+    <div class="wrap sect">
+      <div class="ref-split">
+        <div class="ref-split-l haftend">
+          <p class="eyebrow">01 — Ausgangslage</p>
+          <h2 id="h-lage">KI wird meistens ungeplant angegangen</h2>
+          <p class="lead">Fünf Situationen, die mir in mittelständischen Unternehmen regelmäßig begegnen.</p>
+        </div>
+        <div class="lagen">
+        <div class="satz">
+          <svg class="satz-ic" viewBox="0 0 56 56" width="52" height="52" fill="none"
+               stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M28 50V12"/><path d="M28 16h16l5 5-5 5H28z"/><path d="M28 30H12l-5 5 5 5h16z"/></svg>
+          <p><b>Kein Startpunkt.</b> Sie wollen mit KI anfangen. Unklar ist, womit, wer das entscheidet und was es bringen soll.</p>
+        </div>
+        <div class="satz">
+          <svg class="satz-ic" viewBox="0 0 56 56" width="52" height="52" fill="none"
+               stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="8" width="22" height="17" rx="1.5" fill="var(--cream)"/><path d="M4 13h22" stroke-width="1.2"/><rect x="18" y="19" width="22" height="17" rx="1.5" fill="var(--cream)"/><path d="M18 24h22" stroke-width="1.2"/><rect x="8" y="31" width="22" height="17" rx="1.5" fill="var(--cream)"/><path d="M8 36h22" stroke-width="1.2"/><rect x="32" y="4" width="20" height="15" rx="1.5" fill="var(--cream)"/><path d="M32 9h20" stroke-width="1.2"/></svg>
+          <p><b>Wildwuchs.</b> In mehreren Abteilungen wird KI längst genutzt. Wer was einsetzt und mit welchen Daten, weiß niemand vollständig.</p>
+        </div>
+        <div class="satz">
+          <svg class="satz-ic" viewBox="0 0 56 56" width="52" height="52" fill="none"
+               stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="26" width="10" height="20"/><rect x="23" y="16" width="10" height="30"/><rect x="38" y="32" width="10" height="14"/><path d="M4 46h48"/></svg>
+          <p><b>Kein Maßstab.</b> Es liegen Angebote und Tool-Empfehlungen vor, aber nichts, woran sich entscheiden ließe, welches davon etwas taugt.</p>
+        </div>
+        <div class="satz">
+          <svg class="satz-ic" viewBox="0 0 56 56" width="52" height="52" fill="none"
+               stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M44 28a16 16 0 1 1-6.5-12.9" stroke-linecap="round"/><path d="M38 6.5v9.5h-9.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <p><b>Dauerhafter Testbetrieb.</b> Datenschutz und Mitbestimmung sind nicht geklärt. Deshalb kommt nichts über den Testbetrieb hinaus.</p>
+        </div>
+        <div class="satz">
+          <svg class="satz-ic" viewBox="0 0 56 56" width="52" height="52" fill="none"
+               stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="28" cy="28" r="19"/><circle cx="28" cy="28" r="11"/><circle cx="28" cy="28" r="3.5"/></svg>
+          <p><b>Kein messbares Ergebnis.</b> Ein Pilot ist gelaufen. Ob er etwas gebracht hat, lässt sich nicht sagen, weil vorher nicht festgelegt wurde, woran man es misst.</p>
+        </div>
+          <div class="these">
+            <p class="these-kopf">Woran es fast nie liegt: an der Technik.</p>
+            <p>Es liegt daran, dass niemand festgelegt hat, was zuerst drankommt — und woran man merkt, ob es funktioniert hat.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 02 BEISPIEL ═══ -->
+  <section class="panel" aria-labelledby="h-bsp">
+    <div class="wrap sect">
+      <div class="narrow" style="max-width:58ch">
+        <p class="eyebrow">02 — Beispiele aus der Praxis</p>
+        <h2 id="h-bsp">Aus 40 Minuten werden 3</h2>
+        <p class="lead lead-fett">Messbare Erfolge mit KI lassen sich oft mit einfachen Mitteln erzielen. Ein Beispiel:</p>
+      </div>
+      <div class="bsp">
+        <div class="bsp-text">
+          <p>Bevor bei HR&nbsp;factory ein Profil zum Kunden geht, muss der Lebenslauf ins eigene Vorlagenformat gebracht werden: Stationen übertragen, anonymisieren, zusammenfassen, bei Bedarf übersetzen. Das lief von Hand.</p>
+          <p>Ich habe dafür eine KI-Automatisierung gebaut. Heute wird der Lebenslauf hochgeladen und kommt fertig im Format zurück.</p>
+          <p>Das ist kein Beispiel einer großen KI-Strategie, sondern eine kleine KI-Automatisierung, die für alle Beteiligten Vorteile bringt. Solche Anwendungsfälle finden sich in fast jedem Unternehmen. Welche es bei Ihnen sein könnten, klären wir im ersten Gespräch.</p>
+        </div>
+        <figure class="balken">
+          <div class="bk">
+            <div class="bk-top"><span class="bk-lab">Vorher · Handarbeit</span><span class="bk-val">40 Min</span></div>
+            <div class="bk-bar bk-voll"></div>
+          </div>
+          <div class="bk">
+            <div class="bk-top"><span class="bk-lab">Heute · hochladen und prüfen</span><span class="bk-val">3 Min</span></div>
+            <div class="bk-bar bk-track"><div class="bk-fill"></div></div>
+          </div>
+          <figcaption><span class="bk-lab">Zeiteinsparung im Monat</span><span class="bk-val">30 Stunden</span></figcaption>
+        </figure>
+      </div>
+      <div class="auch">
+        <p class="auch-label">Weitere Bereiche, in denen ich KI eingeführt habe</p>
+        <div class="auch-liste">
+          <div><p class="auch-name">Vertrieb</p><p>Bestands- und Zielkunden recherchieren, Signale bewerten, die Ansprache vorbereiten.</p></div>
+          <div><p class="auch-name">Personal und Recruiting</p><p>Unterlagen ins eigene Format bringen, wiederkehrende Dokumente erzeugen, Kandidaten finden.</p></div>
+          <div><p class="auch-name">Wissen und Auskunft</p><p>Fragen der Mitarbeitenden beantworten, verstreute Informationen auffindbar machen.</p></div>
+          <div><p class="auch-name">Unternehmensweiter KI-Zugang</p><p>Eine Plattform auswählen, einführen, schulen und den Datenschutz dafür klären.</p></div>
+          <div><p class="auch-name">Auswertung und Reporting</p><p>Daten aus mehreren Quellen zusammenführen, bewerten und wiederkehrend aufbereiten.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 03 ABLAUF ═══ -->
+  <section id="ablauf" class="dark" aria-labelledby="h-ablauf">
+    <div class="wrap sect">
+      <div class="narrow">
+        <p class="eyebrow">03 — Ablauf</p>
+        <h2 id="h-ablauf">Ablauf und Preise</h2>
+        <p class="lead">Vier Schritte, unabhängig voneinander buchbar, mit klaren Erfolgsmetriken und weiterführenden Optionen.</p>
+      </div>
+      <div class="achse">
+        <article class="ax">
+          <div class="ax-top"><span>Schritt 1</span><b>kostenlos</b></div>
+          <h3 lang="de">Ersteinschätzung</h3>
+          <p>Sie beschreiben Ihre Ausgangslage und bekommen eine Einschätzung dazu, woran es hängt, und einen Vorschlag für den nächsten Schritt.</p>
+          <p class="ax-foot">30 Minuten, online</p>
+        </article>
+        <article class="ax ax-hi">
+          <div class="ax-top"><span>Schritt 2</span><b>2.900 € netto</b></div>
+          <h3 lang="de">KI-Auftakt</h3>
+          <p>Tag 1: Ich spreche mit Ihnen und vier bis sechs Schlüsselpersonen. Tag 2: Ich werte aus, ob es an der Technik, an den Regeln oder an den Leuten hängt. Danach legen wir in einer Startrunde den ersten Schritt fest, mit Verantwortlichem und Termin. Nach 30 Tagen folgt ein Nachgespräch zum Stand des ersten Schritts.</p>
+          <p class="ax-foot"><b>Ergebnis:</b> ein festgelegter erster Schritt mit Verantwortlichem und Termin<br>2 Tage</p>
+        </article>
+        <article class="ax">
+          <div class="ax-top"><span>Schritt 3</span><b>ab 14.000 € netto</b></div>
+          <h3 lang="de">KI-Weichenstellung</h3>
+          <p>Ich spreche in allen betroffenen Bereichen mit den Beteiligten, auch mit dem Betriebsrat, und prüfe die Rahmenbedingungen: Datenschutz, AI Act, Mitbestimmung. Sie bekommen eine Entscheidungsvorlage mit Reihenfolge, Aufwand und Verantwortlichkeiten. Der erste Pilot startet noch während des Projekts.</p>
+          <p class="ax-foot"><b>Ergebnis:</b> eine Entscheidungsvorlage, mit der Sie ohne mich weiterarbeiten können<br>4 bis 6 Wochen</p>
+        </article>
+        <article class="ax">
+          <div class="ax-top"><span>Schritt 4</span><b>nach Aufwand</b></div>
+          <h3 lang="de">Umsetzung</h3>
+          <p>Wer die Anwendung baut, entscheiden Sie. Kann Ihr eigenes Team das übernehmen, ist das der beste Weg. Wenn nicht, übernimmt Talentigo oder einer meiner Partner. Für Richtung und Reihenfolge bin ich in jedem Fall zuständig.</p>
+          <p class="ax-foot">Begleitung nach Bedarf</p>
+        </article>
+      </div>
+      <div class="cta-row">
+        <a class="btn" href="https://calendly.com/hallo-moritz-steinbach/30min" data-cal>Ersteinschätzung buchen</a>
+        <span class="cta-note">Erster Schritt: 30 Minuten, kostenlos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 03 WER ICH BIN ═══ -->
+  <section id="ueber" aria-labelledby="h-ueber">
+    <div class="wrap sect">
+      <div class="narrow" style="max-width:56ch">
+        <p class="eyebrow">04 — Person</p>
+        <h2 id="h-ueber">Wer ich bin</h2>
+      </div>
+      <div class="bio-wrap">
+      <div class="bio-blocks">
+        <div class="bio-block">
+          <p class="bio-label">Praxis</p>
+          <p>Seit 2023 leite ich die KI-Transformation bei HR&nbsp;factory in München. Ich habe die Einführung dort selbst durchgeführt: Anforderungen aufgenommen, mit Mitarbeitenden gesprochen, Tools konzipiert, entwickelt und gepflegt, die KI-Strategie geschrieben und Schulungen gehalten. Das Unternehmen ist nach ISO&nbsp;27001 zertifiziert, jedes Werkzeug musste also eine Prüfung der Informationssicherheit bestehen. Dazu kommt Talentigo, eine Recruiting-Software, die ich mitgegründet und mitentwickelt habe.</p>
+        </div>
+        <div class="bio-block">
+          <p class="bio-label">Perspektive</p>
+          <p>Als M.A. der Science and Technology Studies (TU München) habe ich untersucht, wie Technik und Organisationen sich gegenseitig verändern. Ich bewerte KI deshalb nicht nur danach, was technisch möglich ist, sondern auch danach, was sie mit der Arbeit und mit den Menschen macht.</p>
+        </div>
+        <div class="bio-block">
+          <p class="bio-label">Gespräche</p>
+          <p>Als zertifizierter Coach führe ich die Gespräche mit Geschäftsführung, Führungskräften und Mitarbeitenden selbst. Unterschiedliche Vorstellungen und Wünsche zu KI innerhalb eines Unternehmens werden offen und ehrlich adressiert.</p>
+        </div>
+      </div>
+      <aside class="kurz">
+        <p class="kurz-label">Kurz</p>
+        <p>Leiter der KI-Transformation, HR&nbsp;factory München, seit 2023</p>
+        <p>Mitgründer von Talentigo, KI-Recruiting-Software</p>
+        <p>Science and Technology Studies, TU München</p>
+        <p>Zertifizierter Coach</p>
+      </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 04 REFERENZEN ═══ -->
+  <section class="panel" aria-labelledby="h-refs">
+    <div class="wrap sect">
+      <div class="ref-split">
+        <div class="ref-split-l">
+          <p class="eyebrow">05 — Referenzen</p>
+          <h2 id="h-refs">Auszug aus den Projekten</h2>
+          <p class="lead">Eine Auswahl. Die Kundenprojekte liefen im Rahmen meiner Tätigkeit für HR&nbsp;factory.</p>
+          <p class="small" style="margin-top:24px">Dazu Workshops an einem Münchner Universitätsklinikum und Vorträge, unter anderem auf den Personalrechtstagen des Lambertus Verlags.</p>
+        </div>
+        <div class="ref-cards">
+          <article class="ref-card">
+            <p class="ref-kick">Konzeption</p>
+            <h3>Süddeutsche Zeitung</h3>
+            <p>Konzeption eines internen KI-Assistenten, der die Personalabteilung entlastet. Zum Auftakt ein Workshop mit den Führungskräften zum Einsatz von KI.</p>
+            <p class="ref-via">über HR&nbsp;factory</p>
+          </article>
+          <article class="ref-card">
+            <p class="ref-kick">Begleitung</p>
+            <h3>Lufthansa CityLine</h3>
+            <p>Beratende Begleitung eines laufenden Transformationsprojekts, mehrfach vor Ort, und Konzeption eines Chatbots für die Personalabteilung. Zum Auftakt ein Workshop.</p>
+            <p class="ref-via">über HR&nbsp;factory</p>
+          </article>
+          <article class="ref-card ref-dunkel">
+            <div class="ref-kopf">
+              <p class="ref-kick">KI-Einführung</p>
+              <h3>HR&nbsp;factory</h3>
+              <p class="ref-via">seit 2023</p>
+            </div>
+            <p>Verantwortlich für die KI-Einführung bei einem HR-Dienstleister mit 25 Jahren Marktpräsenz: Strategie, fünf Anwendungen im laufenden Betrieb, Schulungen für das gesamte Unternehmen und für einzelne Fachbereiche.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 08 FAQ ═══ -->
+  <section id="faq" aria-labelledby="h-faq">
+    <div class="wrap sect">
+      <div class="narrow" style="max-width:56ch">
+        <p class="eyebrow">06 — Fragen</p>
+        <h2 id="h-faq">Häufige Fragen</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary><span class="n">01</span><span>Was kostet das?</span></summary>
+          <div class="a"><p>Die Ersteinschätzung ist kostenlos. Der KI-Auftakt kostet 2.900 € netto. Die KI-Weichenstellung kostet ab 14.000 € netto, abhängig von Unternehmensgröße und Anzahl der Standorte. Umsetzung und Begleitung rechne ich nach Aufwand ab.</p></div>
+        </details>
+        <details>
+          <summary><span class="n">02</span><span>Rechnet sich das?</span></summary>
+          <div class="a">
+            <p>Eine Zahl nenne ich Ihnen erst, wenn ich Ihr Unternehmen gesehen habe. Vorher wäre sie erfunden.</p>
+            <p>Was ich vorher sagen kann: Die Posten, an denen ich ansetze, sind fast immer dieselben. Lizenzen für Werkzeuge, die kaum jemand benutzt. Pilotprojekte, die nie bewertet wurden und trotzdem weiterlaufen. Die Zeit von Führungskräften in Runden ohne Entscheidungsgrundlage. Und die Entlastung, die ausbleibt, solange alles im Testbetrieb hängt.</p>
+            <p>In der Ersteinschätzung sage ich Ihnen, welche dieser Posten bei Ihnen wahrscheinlich die größten sind.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="n">03</span><span>Wie lange dauert es?</span></summary>
+          <div class="a"><p>Der KI-Auftakt umfasst zwei Tage, die sich meist über zwei bis drei Wochen verteilen. Den ersten Schritt legen wir am zweiten Tag fest, er beginnt unmittelbar danach. Die KI-Weichenstellung dauert vier bis sechs Wochen, der erste Pilot startet währenddessen.</p></div>
+        </details>
+        <details>
+          <summary><span class="n">04</span><span>Müssen wir unsere Leute wegen des AI Act schulen?</span></summary>
+          <div class="a">
+            <p>Artikel 4 der KI-Verordnung verlangt seit der Änderung vom Juli 2026, die KI-Kompetenz der Beschäftigten zu <em>fördern</em>. Ein bestimmtes Niveau müssen Sie nicht garantieren, ein eigenes Bußgeld ist dafür nicht vorgesehen. Anbieter, die mit einer Schulungspflicht und Bußgeldern werben, geben die Rechtslage nicht korrekt wieder.</p>
+            <p>Fachlich halte ich Schulungen trotzdem für sinnvoll. Welche Inhalte Ihre Mitarbeitenden brauchen, ergibt sich aus den Gesprächen.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="n">05</span><span>Was ist mit Datenschutz und Betriebsrat?</span></summary>
+          <div class="a"><p>Beides prüfe ich früh. Ich kläre, welche Daten Sie mit welchen Werkzeugen verarbeiten dürfen, und beziehe den Betriebsrat rechtzeitig ein. Die abschließende juristische Bewertung übernimmt Ihre Kanzlei, ich bereite die Fragen so auf, dass die Prüfung wenig Zeit kostet.</p></div>
+        </details>
+        <details>
+          <summary><span class="n">06</span><span>Wir sind nach ISO&nbsp;27001 zertifiziert. Geht das zusammen?</span></summary>
+          <div class="a">
+            <p>Ja. HR&nbsp;factory ist selbst nach ISO&nbsp;27001 zertifiziert. Ich habe KI dort nicht auf der grünen Wiese eingeführt, sondern in ein bestehendes Managementsystem für Informationssicherheit.</p>
+            <p>Praktisch heißt das: Für jedes Werkzeug ist festgehalten, welche Daten hineingehen, wo sie verarbeitet werden, wer Zugriff hat und wie der Anbieter bewertet wurde. Genau daran bleiben die meisten Pilotprojekte hängen.</p>
+            <p>Diese Arbeit fällt ohnehin an, für Ihre Zertifizierung wie für den AI Act. Sie geht deutlich schneller, wenn der Prüfweg einmal festgelegt ist, statt bei jedem Werkzeug neu diskutiert zu werden.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="n">07</span><span>Gibt es Förderung dafür?</span></summary>
+          <div class="a">
+            <p>Die gängigen Programme passen nur eingeschränkt. Die BAFA-Beratungsförderung deckt kurze, abgeschlossene Einzelberatungen ab und läuft Ende 2026 aus. Der Digitalbonus Bayern gilt für Unternehmen unter 50 Mitarbeitenden und nur zusammen mit einer Umsetzung.</p>
+            <p>Wenn Förderung für Ihre Entscheidung wichtig ist, sagen Sie es im Gespräch. Dann schauen wir, welche Programme für Ihren Fall infrage kommen.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="n">08</span><span>Arbeiten Sie vor Ort oder online?</span></summary>
+          <div class="a"><p>Beides ist möglich. Für die meisten Gespräche reicht online. Für einzelne Projekte und Phasen bin ich auch vor Ort. Ich sitze in München und arbeite deutschlandweit.</p></div>
+        </details>
+        <details>
+          <summary><span class="n">09</span><span>Setzen Sie auch selbst um?</span></summary>
+          <div class="a">
+            <p>Das muss nicht über mich laufen. Wenn Ihr Team die Anwendung selbst bauen kann, ist das meistens die bessere Lösung, weil Sie sie danach auch selbst in der Hand haben.</p>
+            <p>Fehlen die Leute dafür, kann Talentigo übernehmen. Für Infrastruktur und die Anbindung an Ihre Systeme arbeite ich mit Partnern zusammen.</p>
+            <p>Für Richtung und Reihenfolge bin ich in jedem Fall zuständig, unabhängig davon, wer baut.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="n">10</span><span>Für wen ist das nichts?</span></summary>
+          <div class="a">
+            <p>Wenn Sie eine einzelne Anwendung suchen, zum Beispiel einen Chatbot, oder eine Tool-Empfehlung brauchen, genügt dafür ein Telefonat. Ein Projekt braucht es nicht.</p>
+            <p>Schwierig wird es in zwei Fällen: wenn KI eingeführt werden soll, ohne dass sich Abläufe ändern dürfen. Und wenn intern bereits entschieden ist und die Entscheidung nur noch von außen bestätigt werden soll. Beides kann ich nicht liefern.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span class="n">11</span><span>Für welche Branchen?</span></summary>
+          <div class="a"><p>Meine Praxis kommt aus Dienstleistung und Personal. Die Methode ist nicht branchengebunden, meine Beispiele sind es.</p></div>
+        </details>
+        <details>
+          <summary><span class="n">12</span><span>Wir besetzen gerade eine KI-Stelle. Passt das zusammen?</span></summary>
+          <div class="a">
+            <p>Ja. Vor der Ausschreibung kläre ich mit Ihnen, welche Aufgaben die Rolle übernehmen soll, welcher Anteil davon technisch ist und welcher zur Führungsarbeit gehört. Der KI-Auftakt beantwortet dieselbe Frage.</p>
+            <p>Wie sich solche Rollen zuschneiden lassen, damit sie besetzbar sind, ist mein zweites Thema. Daran arbeite ich mit <a href="https://talentigo.de" rel="noopener">Talentigo</a>.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ═══ 09 ABSCHLUSS ═══ -->
+  <section id="gespraech" class="dark" aria-labelledby="h-gespraech">
+    <div class="wrap close-in">
+      <div class="close-text">
+        <p class="eyebrow">07 — Nächster Schritt</p>
+        <h2 id="h-gespraech">Ein Gespräch bringt Klarheit</h2>
+        <p class="lead" style="max-width:56ch">30 Minuten, online. Sie beschreiben Ihre Situation und bekommen eine Einschätzung und einen Vorschlag für den nächsten Schritt.</p>
+        <div class="cta-row" style="margin-top:36px">
+          <a class="btn" href="https://calendly.com/hallo-moritz-steinbach/30min" data-cal>Ersteinschätzung buchen</a>
+        </div>
+        <p class="mailto">Lieber schreiben? <a href="mailto:hallo@moritz-steinbach.de">hallo@moritz-steinbach.de</a> · <a href="https://de.linkedin.com/in/moritz-steinbach/de" rel="noopener">LinkedIn</a></p>
+      </div>
+      <div class="close-list">
+        <div><span>01</span><span>30 Minuten, kostenlos</span></div>
+        <div><span>02</span><span>Außensicht auf Ihre laufenden KI-Initiativen</span></div>
+        <div><span>03</span><span>Prüfung der Annahmen, auf denen sie beruhen</span></div>
+        <div><span>04</span><span>Empfehlung für den nächsten Schritt</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <span>© 2026 Moritz Steinbach · München</span>
+      <div class="foot-links">
+        <a href="/impressum.html">Impressum</a>
+        <a href="/datenschutz.html">Datenschutz</a>
+        <a href="https://de.linkedin.com/in/moritz-steinbach/de" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="consent" role="dialog" aria-live="polite" aria-label="Hinweis zu Cookies">
+    <p>Ich messe mit Google Ads, welche Anzeige zu einem Gespräch geführt hat. Dafür wird ein Cookie gesetzt. Sie können das ablehnen, die Seite funktioniert genauso. Mehr dazu in der <a href="/datenschutz.html">Datenschutzerklärung</a>.</p>
+    <div class="consent-actions">
+      <button type="button" id="consent-no">Nur Notwendiges</button>
+      <button type="button" id="consent-yes" class="primary">Einverstanden</button>
+    </div>
+  </div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://moritz-steinbach.de/#service",
+      "name": "Moritz Steinbach, KI-Beratung für den Mittelstand",
+      "description": "Beratung zur Einführung von KI in mittelständischen Unternehmen: Analyse, woran es hängt, Reihenfolge der Schritte und Begleitung der Umsetzung.",
+      "url": "https://moritz-steinbach.de/",
+      "areaServed": "DE",
+      "availableLanguage": "de",
+      "priceRange": "2900-20000 EUR",
+      "founder": {
+        "@id": "https://moritz-steinbach.de/#person"
+      },
+      "provider": {
+        "@id": "https://moritz-steinbach.de/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://moritz-steinbach.de/#person",
+      "name": "Moritz Steinbach",
+      "jobTitle": "KI-Berater",
+      "url": "https://moritz-steinbach.de/",
+      "image": "https://moritz-steinbach.de/images/moritz.png",
+      "email": "hallo@moritz-steinbach.de",
+      "sameAs": [
+        "https://de.linkedin.com/in/moritz-steinbach/de"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "München",
+        "addressCountry": "DE"
+      },
+      "alumniOf": "Technische Universität München",
+      "knowsAbout": [
+        "KI-Einführung",
+        "KI-Strategie",
+        "Change Management",
+        "KI-Kompetenz",
+        "EU AI Act"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Was kostet die KI-Beratung?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die Ersteinschätzung ist kostenlos. Der KI-Auftakt kostet 2.900 € netto. Die KI-Weichenstellung kostet ab 14.000 € netto, abhängig von Unternehmensgröße und Anzahl der Standorte. Umsetzung und Begleitung rechne ich nach Aufwand ab."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Müssen Unternehmen ihre Mitarbeitenden wegen des AI Act schulen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Artikel 4 der KI-Verordnung verlangt seit der Änderung vom Juli 2026, die KI-Kompetenz der Beschäftigten zu fördern. Ein bestimmtes Niveau müssen Sie nicht garantieren, ein eigenes Bußgeld ist dafür nicht vorgesehen. Anbieter, die mit einer Schulungspflicht und Bußgeldern werben, geben die Rechtslage nicht korrekt wieder. Fachlich halte ich Schulungen trotzdem für sinnvoll. Welche Inhalte Ihre Mitarbeitenden brauchen, ergibt sich aus den Gesprächen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Arbeitet Moritz Steinbach vor Ort oder online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Beides ist möglich. Für die meisten Gespräche reicht online. Für einzelne Projekte und Phasen bin ich auch vor Ort. Ich sitze in München und arbeite deutschlandweit."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script src="js/reveal.js?v=1" defer></script>
+<script src="js/site.js?v=4"></script>
+
 </body>
 </html>

@@ -2,3 +2,21 @@
 Thumbs.db
 *.log
 node_modules/
+
+# Arbeitsdateien, die nicht auf den Server gehören
+_to_delete/
+Claude outputs/
+Moritz Steinbach - Website (1c).html
+
+# Reste der alten React-Fassung; liegen noch lokal, werden nicht mehr ausgeliefert
+make-link.html
+js/app.js
+js/triangle.js
+js/react.production.min.js
+js/react-dom.production.min.js
+fonts/inter-latin-wght-normal.woff2
+fonts/inter-latin-ext-wght-normal.woff2
+fonts/source-serif-4.woff2
+fonts/source-serif-4-italic.woff2
+fonts/space-grotesk.woff2
+images/moritz.png
