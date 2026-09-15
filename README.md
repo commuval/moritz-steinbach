@@ -1,8 +1,14 @@
 # moritz-steinbach.de
 
 Einseitige Landingpage für die KI-Beratung. Statisches HTML, keine Build-Pipeline,
-kein Framework. Cloudflare Pages liefert den Inhalt dieses Repos aus
-(Branch `main`, Build-Command leer, Output-Verzeichnis `/`).
+kein Framework.
+
+Ausgeliefert wird der Branch `main` über **GitHub Pages** (daher die Datei `CNAME`);
+davor hängt Cloudflare als Proxy für DNS und TLS. Wichtig: GitHub Pages wertet die Datei
+`_headers` **nicht** aus — die Security-Header und die Cache-Regeln darin sind derzeit
+wirkungslos. Sie stehen hier als Vorlage: entweder als Response-Header-Transformationsregel
+in Cloudflare eintragen oder das Projekt auf Cloudflare Pages umziehen, wo `_headers`
+direkt greift.
 
 ## Dateien
 
