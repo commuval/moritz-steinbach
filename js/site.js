@@ -10,9 +10,9 @@
 (function () {
   'use strict';
 
-  var ADS_ID = 'AW-405138367';
-  var LABEL_TERMIN = 'Dt5DCPXI8fgcEL_Xl8EB';
-  var LABEL_KALENDER = 'nDweCPjI8fgcEL_Xl8EB';
+  var ADS_ID = 'AW-17669945856';
+  var LABEL_TERMIN = 'k9lLCIWa8PgcEID01-lB';
+  var LABEL_KALENDER = '_Wt-CIia8PgcEID01-lB';
 
   var KEY = 'ms-consent';
 
